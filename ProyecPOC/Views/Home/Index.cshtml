@@ -1,0 +1,28 @@
+﻿@model IEnumerable<ProyecPOC.Models.pymes>
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h1>Pymes Online Chile</h1>
+    <p class="lead"><hr /></p>
+    <p><hr /></p>
+</div>
+
+<table class="table">
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.nombre)
+                </td>
+
+             </tr>
+        }
+ </table>
+
+
+
+
+  

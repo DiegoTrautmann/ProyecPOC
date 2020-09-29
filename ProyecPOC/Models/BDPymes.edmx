@@ -1,0 +1,413 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="pymesonlinechileModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="categoria">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="descripcion" Type="varchar" MaxLength="1000" />
+        </EntityType>
+        <EntityType Name="cuidad">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <EntityType Name="provincia">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <EntityType Name="pymes">
+          <Key>
+            <PropertyRef Name="rut" />
+          </Key>
+          <Property Name="rut" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="descripcion" Type="varchar" MaxLength="2000" Nullable="false" />
+          <Property Name="id_categoria" Type="int" Nullable="false" />
+          <Property Name="id_subcategoria" Type="int" Nullable="false" />
+          <Property Name="celular" Type="varchar" MaxLength="9" />
+          <Property Name="correo" Type="varchar" MaxLength="40" />
+          <Property Name="dirección" Type="varchar" MaxLength="35" />
+          <Property Name="sitioweb" Type="varchar" MaxLength="30" />
+          <Property Name="redsocial1" Type="varchar" MaxLength="50" />
+          <Property Name="redsocial2" Type="varchar" MaxLength="50" />
+          <Property Name="redsocial3" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="sub_categoria">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="id_categoria" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="usuario">
+          <Key>
+            <PropertyRef Name="rut_pyme" />
+          </Key>
+          <Property Name="rut_pyme" Type="int" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="direccion" Type="varchar" MaxLength="60" Nullable="false" />
+          <Property Name="correo" Type="int" Nullable="false" />
+          <Property Name="id_cuidad" Type="int" Nullable="false" />
+          <Property Name="id_provincia" Type="int" Nullable="false" />
+          <Property Name="contraseña" Type="blob" Nullable="false" />
+          <Property Name="telefono" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="pymes_ibfk_1">
+          <End Role="categoria" Type="Self.categoria" Multiplicity="1" />
+          <End Role="pymes" Type="Self.pymes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="categoria">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="pymes">
+              <PropertyRef Name="id_categoria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="pymes_ibfk_2">
+          <End Role="sub_categoria" Type="Self.sub_categoria" Multiplicity="1" />
+          <End Role="pymes" Type="Self.pymes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="sub_categoria">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="pymes">
+              <PropertyRef Name="id_subcategoria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="sub_categoria_ibfk_1">
+          <End Role="categoria" Type="Self.categoria" Multiplicity="1" />
+          <End Role="sub_categoria" Type="Self.sub_categoria" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="categoria">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="sub_categoria">
+              <PropertyRef Name="id_categoria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="usuario_ibfk_1">
+          <End Role="cuidad" Type="Self.cuidad" Multiplicity="1" />
+          <End Role="usuario" Type="Self.usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cuidad">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="usuario">
+              <PropertyRef Name="id_cuidad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="usuario_ibfk_2">
+          <End Role="provincia" Type="Self.provincia" Multiplicity="1" />
+          <End Role="usuario" Type="Self.usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="provincia">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="usuario">
+              <PropertyRef Name="id_provincia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="pymesonlinechileModelStoreContainer">
+          <EntitySet Name="categoria" EntityType="Self.categoria" Schema="pymesonlinechile" store:Type="Tables" />
+          <EntitySet Name="cuidad" EntityType="Self.cuidad" Schema="pymesonlinechile" store:Type="Tables" />
+          <EntitySet Name="provincia" EntityType="Self.provincia" Schema="pymesonlinechile" store:Type="Tables" />
+          <EntitySet Name="pymes" EntityType="Self.pymes" Schema="pymesonlinechile" store:Type="Tables" />
+          <EntitySet Name="sub_categoria" EntityType="Self.sub_categoria" Schema="pymesonlinechile" store:Type="Tables" />
+          <EntitySet Name="usuario" EntityType="Self.usuario" Schema="pymesonlinechile" store:Type="Tables" />
+          <AssociationSet Name="pymes_ibfk_1" Association="Self.pymes_ibfk_1">
+            <End Role="categoria" EntitySet="categoria" />
+            <End Role="pymes" EntitySet="pymes" />
+          </AssociationSet>
+          <AssociationSet Name="pymes_ibfk_2" Association="Self.pymes_ibfk_2">
+            <End Role="sub_categoria" EntitySet="sub_categoria" />
+            <End Role="pymes" EntitySet="pymes" />
+          </AssociationSet>
+          <AssociationSet Name="sub_categoria_ibfk_1" Association="Self.sub_categoria_ibfk_1">
+            <End Role="categoria" EntitySet="categoria" />
+            <End Role="sub_categoria" EntitySet="sub_categoria" />
+          </AssociationSet>
+          <AssociationSet Name="usuario_ibfk_1" Association="Self.usuario_ibfk_1">
+            <End Role="cuidad" EntitySet="cuidad" />
+            <End Role="usuario" EntitySet="usuario" />
+          </AssociationSet>
+          <AssociationSet Name="usuario_ibfk_2" Association="Self.usuario_ibfk_2">
+            <End Role="provincia" EntitySet="provincia" />
+            <End Role="usuario" EntitySet="usuario" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="pymesonlinechileModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="categoria">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="descripcion" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="pymes" Relationship="Self.pymes_ibfk_1" FromRole="categoria" ToRole="pymes" />
+          <NavigationProperty Name="sub_categoria" Relationship="Self.sub_categoria_ibfk_1" FromRole="categoria" ToRole="sub_categoria" />
+        </EntityType>
+        <EntityType Name="cuidad">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="usuario" Relationship="Self.usuario_ibfk_1" FromRole="cuidad" ToRole="usuario" />
+        </EntityType>
+        <EntityType Name="provincia">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="usuario" Relationship="Self.usuario_ibfk_2" FromRole="provincia" ToRole="usuario" />
+        </EntityType>
+        <EntityType Name="pymes">
+          <Key>
+            <PropertyRef Name="rut" />
+          </Key>
+          <Property Name="rut" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="descripcion" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="id_categoria" Type="Int32" Nullable="false" />
+          <Property Name="id_subcategoria" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="categoria" Relationship="Self.pymes_ibfk_1" FromRole="pymes" ToRole="categoria" />
+          <NavigationProperty Name="sub_categoria" Relationship="Self.pymes_ibfk_2" FromRole="pymes" ToRole="sub_categoria" />
+          <Property Name="celular" Type="String" MaxLength="9" FixedLength="false" Unicode="false" />
+          <Property Name="correo" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="dirección" Type="String" MaxLength="35" FixedLength="false" Unicode="false" />
+          <Property Name="sitioweb" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="redsocial1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="redsocial2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="redsocial3" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="sub_categoria">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="id_categoria" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="categoria" Relationship="Self.sub_categoria_ibfk_1" FromRole="sub_categoria" ToRole="categoria" />
+          <NavigationProperty Name="pymes" Relationship="Self.pymes_ibfk_2" FromRole="sub_categoria" ToRole="pymes" />
+        </EntityType>
+        <EntityType Name="usuario">
+          <Key>
+            <PropertyRef Name="rut_pyme" />
+          </Key>
+          <Property Name="rut_pyme" Type="Int32" Nullable="false" />
+          <Property Name="nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="direccion" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="correo" Type="Int32" Nullable="false" />
+          <Property Name="id_cuidad" Type="Int32" Nullable="false" />
+          <Property Name="id_provincia" Type="Int32" Nullable="false" />
+          <Property Name="contraseña" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="telefono" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="cuidad" Relationship="Self.usuario_ibfk_1" FromRole="usuario" ToRole="cuidad" />
+          <NavigationProperty Name="provincia" Relationship="Self.usuario_ibfk_2" FromRole="usuario" ToRole="provincia" />
+        </EntityType>
+        <Association Name="pymes_ibfk_1">
+          <End Role="categoria" Type="Self.categoria" Multiplicity="1" />
+          <End Role="pymes" Type="Self.pymes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="categoria">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="pymes">
+              <PropertyRef Name="id_categoria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="sub_categoria_ibfk_1">
+          <End Role="categoria" Type="Self.categoria" Multiplicity="1" />
+          <End Role="sub_categoria" Type="Self.sub_categoria" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="categoria">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="sub_categoria">
+              <PropertyRef Name="id_categoria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="usuario_ibfk_1">
+          <End Role="cuidad" Type="Self.cuidad" Multiplicity="1" />
+          <End Role="usuario" Type="Self.usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cuidad">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="usuario">
+              <PropertyRef Name="id_cuidad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="usuario_ibfk_2">
+          <End Role="provincia" Type="Self.provincia" Multiplicity="1" />
+          <End Role="usuario" Type="Self.usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="provincia">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="usuario">
+              <PropertyRef Name="id_provincia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="pymes_ibfk_2">
+          <End Role="sub_categoria" Type="Self.sub_categoria" Multiplicity="1" />
+          <End Role="pymes" Type="Self.pymes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="sub_categoria">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="pymes">
+              <PropertyRef Name="id_subcategoria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BDPOC" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="categoria" EntityType="Self.categoria" />
+          <EntitySet Name="cuidad" EntityType="Self.cuidad" />
+          <EntitySet Name="provincia" EntityType="Self.provincia" />
+          <EntitySet Name="pymes" EntityType="Self.pymes" />
+          <EntitySet Name="sub_categoria" EntityType="Self.sub_categoria" />
+          <EntitySet Name="usuario" EntityType="Self.usuario" />
+          <AssociationSet Name="pymes_ibfk_1" Association="Self.pymes_ibfk_1">
+            <End Role="categoria" EntitySet="categoria" />
+            <End Role="pymes" EntitySet="pymes" />
+          </AssociationSet>
+          <AssociationSet Name="sub_categoria_ibfk_1" Association="Self.sub_categoria_ibfk_1">
+            <End Role="categoria" EntitySet="categoria" />
+            <End Role="sub_categoria" EntitySet="sub_categoria" />
+          </AssociationSet>
+          <AssociationSet Name="usuario_ibfk_1" Association="Self.usuario_ibfk_1">
+            <End Role="cuidad" EntitySet="cuidad" />
+            <End Role="usuario" EntitySet="usuario" />
+          </AssociationSet>
+          <AssociationSet Name="usuario_ibfk_2" Association="Self.usuario_ibfk_2">
+            <End Role="provincia" EntitySet="provincia" />
+            <End Role="usuario" EntitySet="usuario" />
+          </AssociationSet>
+          <AssociationSet Name="pymes_ibfk_2" Association="Self.pymes_ibfk_2">
+            <End Role="sub_categoria" EntitySet="sub_categoria" />
+            <End Role="pymes" EntitySet="pymes" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="pymesonlinechileModelStoreContainer" CdmEntityContainer="BDPOC">
+          <EntitySetMapping Name="categoria">
+            <EntityTypeMapping TypeName="pymesonlinechileModel.categoria">
+              <MappingFragment StoreEntitySet="categoria">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="cuidad">
+            <EntityTypeMapping TypeName="pymesonlinechileModel.cuidad">
+              <MappingFragment StoreEntitySet="cuidad">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="provincia">
+            <EntityTypeMapping TypeName="pymesonlinechileModel.provincia">
+              <MappingFragment StoreEntitySet="provincia">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="pymes">
+            <EntityTypeMapping TypeName="pymesonlinechileModel.pymes">
+              <MappingFragment StoreEntitySet="pymes">
+                <ScalarProperty Name="redsocial3" ColumnName="redsocial3" />
+                <ScalarProperty Name="redsocial2" ColumnName="redsocial2" />
+                <ScalarProperty Name="redsocial1" ColumnName="redsocial1" />
+                <ScalarProperty Name="sitioweb" ColumnName="sitioweb" />
+                <ScalarProperty Name="dirección" ColumnName="dirección" />
+                <ScalarProperty Name="correo" ColumnName="correo" />
+                <ScalarProperty Name="celular" ColumnName="celular" />
+                <ScalarProperty Name="rut" ColumnName="rut" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="id_categoria" ColumnName="id_categoria" />
+                <ScalarProperty Name="id_subcategoria" ColumnName="id_subcategoria" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sub_categoria">
+            <EntityTypeMapping TypeName="pymesonlinechileModel.sub_categoria">
+              <MappingFragment StoreEntitySet="sub_categoria">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="id_categoria" ColumnName="id_categoria" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="usuario">
+            <EntityTypeMapping TypeName="pymesonlinechileModel.usuario">
+              <MappingFragment StoreEntitySet="usuario">
+                <ScalarProperty Name="rut_pyme" ColumnName="rut_pyme" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="direccion" ColumnName="direccion" />
+                <ScalarProperty Name="correo" ColumnName="correo" />
+                <ScalarProperty Name="id_cuidad" ColumnName="id_cuidad" />
+                <ScalarProperty Name="id_provincia" ColumnName="id_provincia" />
+                <ScalarProperty Name="contraseña" ColumnName="contraseña" />
+                <ScalarProperty Name="telefono" ColumnName="telefono" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

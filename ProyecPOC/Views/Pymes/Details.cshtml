@@ -1,0 +1,50 @@
+﻿@model ProyecPOC.Models.pymes
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Detalles</h2>
+
+<div>
+    <h4>Pymes</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+              Nombre:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nombre)
+        </dd>
+
+        <dt>
+           Descripción:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.descripcion)
+        </dd>
+
+        <dt>
+            Categoría:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.categoria.nombre)
+        </dd>
+
+        <dt>
+            SubCategoría:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.sub_categoria.nombre)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Editar", "Edit", new { id = Model.rut }) |
+    @Html.ActionLink("Volver", "Index")
+</p>
