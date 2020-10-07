@@ -1,4 +1,4 @@
-﻿// La generación de código T4 está habilitada para el modelo 'C:\Users\tamia\source\repos\ProyecPOC\ProyecPOC\Models\BDPymes.edmx'. 
+﻿// La generación de código T4 está habilitada para el modelo 'C:\Users\marco\Source\Repos\DiegoTrautmann\ProyecPOC\ProyecPOC\Models\BDPymes.edmx'. 
 // Para habilitar la generación de código heredada, cambie el valor de la propiedad del diseñador 'Estrategia de generación de código'
 // por 'ObjectContext heredado'. Esta propiedad está disponible en la ventana Propiedades cuando se abre
 // el modelo en el diseñador.
